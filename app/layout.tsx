@@ -27,11 +27,11 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "MarketingNow — Your Entire Marketing Stack, One AI Platform",
+  title: "MarketingNow - Your Entire Marketing Stack, One AI Platform",
   description:
     "Replace 6 expensive marketing tools with one AI-powered platform. Save $392/mo on pitch decks, landing pages, social media, analytics & more. Join the waitlist.",
   openGraph: {
-    title: "MarketingNow — Your Entire Marketing Stack, One AI Platform",
+    title: "MarketingNow - Your Entire Marketing Stack, One AI Platform",
     description:
       "Replace 6 expensive marketing tools with one AI-powered platform. Save $392/mo. Join the waitlist.",
     type: "website",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MarketingNow — Your Entire Marketing Stack, One AI Platform",
+    title: "MarketingNow - Your Entire Marketing Stack, One AI Platform",
     description:
       "Replace 6 expensive marketing tools with one AI-powered platform. Save $392/mo. Join the waitlist.",
   },
