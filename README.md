@@ -23,7 +23,7 @@ Create a `.env` file (see `.env.example`):
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=your_publishable_key
-NEXT_PUBLIC_BASE_URL=https://www.marketingnow.app
+NEXT_PUBLIC_BASE_URL=https://marketingnow.app
 ```
 
 3. **Run the development server:**
