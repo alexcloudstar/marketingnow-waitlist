@@ -26,7 +26,7 @@ const instrumentSerif = Instrument_Serif({
   style: ["normal", "italic"],
 });
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://marketingnow.app";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.marketingnow.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
