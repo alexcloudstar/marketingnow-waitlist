@@ -90,15 +90,14 @@ export function Hero() {
             transition={{ delay: 0.85, duration: 0.5, ease }}
             className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base"
           >
-            One AI platform. Six tools replaced.{" "}
-            Save{" "}
-            <CountUp
+            One AI platform. Six tools replaced. Save $392/mo.
+            {/* <CountUp
               value={392}
               prefix="$"
               suffix="/mo"
               duration={2.5}
               className="text-glow-red font-mono font-bold text-red-500"
-            />
+            /> */}
           </motion.p>
 
           {/* Form with CTA glow */}
@@ -114,19 +113,19 @@ export function Hero() {
           </motion.div>
 
           {/* Live join ticker */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 0.4, ease }}
             className="mt-4"
           >
             <LiveJoinTicker />
-          </motion.div>
+          </motion.div> */}
 
           {/* Avatar stack social proof */}
-          <div className="mt-3">
+          {/* <div className="mt-3">
             <AvatarStack />
-          </div>
+          </div> */}
         </div>
       </div>
 
