@@ -10,20 +10,6 @@ import { motion } from "framer-motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-const EMBERS = Array.from({ length: 16 }, (_, i) => ({
-  id: i,
-  left: `${5 + Math.random() * 90}%`,
-  bottom: `${-5 - Math.random() * 10}%`,
-  size: Math.random() > 0.5 ? 2 : 3,
-  duration: `${8 + Math.random() * 12}s`,
-  delay: `${Math.random() * 10}s`,
-  color: ["amber", "violet", "magenta"][i % 3] as
-    | "amber"
-    | "violet"
-    | "magenta",
-  alt: i % 2 === 0,
-}));
-
 export function Hero() {
   return (
     <section className="noise-overlay relative flex h-dvh flex-col overflow-hidden bg-surface-0 px-5 sm:px-8 lg:px-12">
@@ -54,25 +40,6 @@ export function Hero() {
         }}
       />
 
-      {/* Floating ember particles */}
-      <div className="pointer-events-none absolute inset-0">
-        {EMBERS.map((e) => (
-          <div
-            key={e.id}
-            className={`ember ember--${e.color}`}
-            style={{
-              left: e.left,
-              bottom: e.bottom,
-              width: e.size,
-              height: e.size,
-              animation: `${e.alt ? "ember-rise-alt" : "ember-rise"} ${e.duration} linear ${e.delay} infinite`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Scan line — horizontal light sweep */}
-      <div className="scan-line" />
 
       {/* ---- Header row ---- */}
       <motion.header

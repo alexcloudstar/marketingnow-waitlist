@@ -19,7 +19,7 @@ export async function joinWaitlist(
 
   const supabase = await createClient();
 
-  // Insert — unique constraint on email handles duplicates
+  // Insert - unique constraint on email handles duplicates
   const { error } = await supabase
     .from("waitlist")
     .insert({ email: trimmed });
