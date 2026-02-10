@@ -5,19 +5,14 @@ import { joinWaitlist } from "@/app/actions/waitlist";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { Loader2, CheckCircle2, AlertCircle, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface WaitlistFormProps {
-  variant?: "hero" | "cta";
-  source?: string;
   className?: string;
 }
 
-export function WaitlistForm({
-  variant = "hero",
-  source = "hero",
-  className,
-}: WaitlistFormProps) {
+export function WaitlistForm({ className }: WaitlistFormProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
@@ -26,7 +21,7 @@ export function WaitlistForm({
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     startTransition(async () => {
-      const result = await joinWaitlist(email, source);
+      const result = await joinWaitlist(email);
       setStatus(result.success ? "success" : "error");
       setMessage(result.message);
       if (result.success) setEmail("");
@@ -35,35 +30,29 @@ export function WaitlistForm({
 
   if (status === "success") {
     return (
-      <div
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
         className={cn(
-          "flex items-center gap-2 rounded-lg border border-brand-teal/30 bg-brand-teal/10 px-4 py-3 text-sm text-brand-teal",
+          "flex items-center gap-3 rounded-2xl border border-brand-amber/30 bg-brand-amber/[0.07] px-6 py-4 text-sm font-medium text-brand-amber",
           className
         )}
       >
-        <CheckCircle2 className="size-4 shrink-0" />
+        <CheckCircle2 className="size-5 shrink-0" />
         {message}
-      </div>
+      </motion.div>
     );
   }
-
-  const isCtaVariant = variant === "cta";
 
   return (
     <form
       onSubmit={handleSubmit}
-      className={cn(
-        "flex w-full gap-2",
-        isCtaVariant
-          ? "max-w-lg flex-col sm:flex-row"
-          : "max-w-md flex-col sm:flex-row",
-        className
-      )}
+      className={cn("flex w-full max-w-md gap-2 flex-col sm:flex-row", className)}
     >
       <div className="relative flex-1">
         <Input
           type="email"
-          placeholder="Enter your email"
+          placeholder="Enter your best email"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
@@ -71,8 +60,7 @@ export function WaitlistForm({
           }}
           required
           className={cn(
-            "h-11 rounded-lg border-white/10 bg-white/5 text-sm placeholder:text-muted-foreground",
-            isCtaVariant && "h-12 text-base",
+            "h-12 rounded-xl border-white/[0.06] bg-transparent text-sm placeholder:text-muted-foreground/60 focus:border-brand-amber/30 focus:ring-brand-amber/10",
             status === "error" && "border-destructive/50"
           )}
         />
@@ -86,24 +74,16 @@ export function WaitlistForm({
       <Button
         type="submit"
         disabled={isPending}
-        className={cn(
-          "relative h-11 shrink-0 overflow-hidden rounded-lg bg-brand-indigo px-6 font-semibold text-white hover:bg-brand-indigo/90",
-          isCtaVariant && "h-12 px-8 text-base"
-        )}
+        className="btn-amber group relative h-12 shrink-0 rounded-xl px-7 font-semibold"
       >
         {isPending ? (
           <Loader2 className="size-4 animate-spin" />
         ) : (
-          "Join the Waitlist"
+          <span className="flex items-center gap-2">
+            Claim Your Spot
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+          </span>
         )}
-        <span
-          className="absolute inset-0 -z-10"
-          style={{
-            background:
-              "linear-gradient(135deg, transparent 40%, oklch(0.75 0.15 194 / 0.3) 50%, transparent 60%)",
-            animation: "shimmer 3s ease-in-out infinite",
-          }}
-        />
       </Button>
     </form>
   );

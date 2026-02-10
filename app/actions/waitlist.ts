@@ -1,13 +1,6 @@
 "use server";
 
-import { readFile, writeFile } from "fs/promises";
-import path from "path";
-
-interface WaitlistEntry {
-  email: string;
-  timestamp: string;
-  source: string;
-}
+import { createClient } from "@/lib/supabase";
 
 interface WaitlistResult {
   success: boolean;
@@ -15,20 +8,8 @@ interface WaitlistResult {
   count?: number;
 }
 
-const DATA_PATH = path.join(process.cwd(), "data", "waitlist.json");
-
-async function getEntries(): Promise<WaitlistEntry[]> {
-  try {
-    const raw = await readFile(DATA_PATH, "utf-8");
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
-}
-
 export async function joinWaitlist(
-  email: string,
-  source: string = "hero"
+  email: string
 ): Promise<WaitlistResult> {
   const trimmed = email.trim().toLowerCase();
 
@@ -36,27 +17,24 @@ export async function joinWaitlist(
     return { success: false, message: "Please enter a valid email address." };
   }
 
-  const entries = await getEntries();
+  const supabase = await createClient();
 
-  if (entries.some((e) => e.email === trimmed)) {
-    return {
-      success: false,
-      message: "You're already on the waitlist!",
-      count: entries.length,
-    };
+  // Insert — unique constraint on email handles duplicates
+  const { error } = await supabase
+    .from("waitlist")
+    .insert({ email: trimmed });
+
+  if (error) {
+    if (error.code === "23505") {
+      // Unique violation
+      return { success: false, message: "You're already on the waitlist!" };
+    }
+    console.error("Supabase insert error:", error);
+    return { success: false, message: "Something went wrong. Try again." };
   }
-
-  entries.push({
-    email: trimmed,
-    timestamp: new Date().toISOString(),
-    source,
-  });
-
-  await writeFile(DATA_PATH, JSON.stringify(entries, null, 2));
 
   return {
     success: true,
     message: "You're on the list! We'll be in touch soon.",
-    count: entries.length,
   };
 }

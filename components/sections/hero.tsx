@@ -1,78 +1,182 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { WaitlistForm } from "@/components/waitlist-form";
-import { FadeIn } from "@/components/motion/fade-in";
+import { LiveJoinTicker } from "@/components/motion/live-join-ticker";
+import { AvatarStack } from "@/components/motion/avatar-stack";
 import { GradientOrb } from "@/components/motion/gradient-orb";
+import { CountUp } from "@/components/motion/count-up";
+import { Logo } from "@/components/logo";
+import { motion } from "framer-motion";
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const EMBERS = Array.from({ length: 16 }, (_, i) => ({
+  id: i,
+  left: `${5 + Math.random() * 90}%`,
+  bottom: `${-5 - Math.random() * 10}%`,
+  size: Math.random() > 0.5 ? 2 : 3,
+  duration: `${8 + Math.random() * 12}s`,
+  delay: `${Math.random() * 10}s`,
+  color: ["amber", "violet", "magenta"][i % 3] as
+    | "amber"
+    | "violet"
+    | "magenta",
+  alt: i % 2 === 0,
+}));
 
 export function Hero() {
   return (
-    <section
-      id="hero"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-20 sm:px-6 lg:px-8"
-    >
-      {/* Background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,oklch(0.488_0.243_264.376_/_0.3),transparent)]" />
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(oklch(1 0 0 / 0.05) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0 / 0.05) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-        />
+    <section className="noise-overlay relative flex h-dvh flex-col overflow-hidden bg-surface-0 px-5 sm:px-8 lg:px-12">
+      {/* Animated mesh gradient background */}
+      <div className="mesh-gradient-bg pointer-events-none absolute inset-0" />
+
+      {/* Dot grid depth layer */}
+      <div className="dot-grid pointer-events-none absolute inset-0" />
+
+      {/* Ambient gradient orbs */}
+      <GradientOrb color="violet" size="xl" className="-top-32 -right-32" />
+      <GradientOrb color="magenta" size="lg" className="-bottom-24 -left-24" />
+      <GradientOrb
+        color="amber"
+        size="md"
+        className="top-1/2 right-[10%] -translate-y-1/2"
+      />
+      <GradientOrb color="gold" size="sm" className="top-[15%] left-[20%]" />
+
+      {/* Gallery lighting — dual radial gradient */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: [
+            "radial-gradient(ellipse 80% 50% at 50% 0%, oklch(1 0 0 / 0.06), transparent)",
+            "radial-gradient(ellipse 40% 40% at 15% 80%, oklch(0.55 0.27 300 / 0.04), transparent)",
+          ].join(", "),
+        }}
+      />
+
+      {/* Floating ember particles */}
+      <div className="pointer-events-none absolute inset-0">
+        {EMBERS.map((e) => (
+          <div
+            key={e.id}
+            className={`ember ember--${e.color}`}
+            style={{
+              left: e.left,
+              bottom: e.bottom,
+              width: e.size,
+              height: e.size,
+              animation: `${e.alt ? "ember-rise-alt" : "ember-rise"} ${e.duration} linear ${e.delay} infinite`,
+            }}
+          />
+        ))}
       </div>
 
-      <GradientOrb color="indigo" size="lg" className="-left-48 -top-24" />
-      <GradientOrb color="cyan" size="md" className="-right-32 top-1/3" style={{ animationDelay: "2s" }} />
-      <GradientOrb color="teal" size="sm" className="bottom-20 left-1/4" style={{ animationDelay: "4s" }} />
+      {/* Scan line — horizontal light sweep */}
+      <div className="scan-line" />
 
-      <div className="relative mx-auto max-w-4xl text-center">
-        <FadeIn delay={0}>
-          <Badge
-            variant="outline"
-            className="mb-6 border-brand-indigo/30 bg-brand-indigo/10 px-3 py-1 text-xs font-medium text-brand-cyan"
+      {/* ---- Header row ---- */}
+      <motion.header
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.6, ease }}
+        className="relative z-10 flex shrink-0 items-center justify-between pt-5 sm:pt-6"
+      >
+        <Logo />
+      </motion.header>
+
+      {/* ---- Main content ---- */}
+      <div className="relative z-10 flex flex-1 items-center">
+        <div className="max-w-2xl lg:ml-[12%]">
+          {/* "Marketing" */}
+          <motion.h1
+            initial={{ opacity: 0, y: 50, scale: 1.04, filter: "blur(12px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            transition={{ delay: 0.1, duration: 0.7, ease }}
+            className="text-gradient-headline font-serif text-[clamp(3.5rem,10vw,9rem)] leading-[0.9] tracking-tight"
+            style={{ textShadow: "0 0 80px oklch(1 0 0 / 0.05)" }}
           >
-            <span className="mr-1.5 inline-block size-1.5 animate-pulse rounded-full bg-brand-cyan" />
-            Launching Soon
-          </Badge>
-        </FadeIn>
+            Marketing
+          </motion.h1>
 
-        <FadeIn delay={0.1}>
-          <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-            Stop Paying for{" "}
-            <span className="text-gradient">6 Marketing Tools.</span>
-            <br />
-            Start Using One.
-          </h1>
-        </FadeIn>
+          {/* "Now." — italic, amber, offset */}
+          <motion.p
+            initial={{ opacity: 0, y: 50, filter: "blur(12px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ delay: 0.35, duration: 0.7, ease }}
+            className="text-glow-amber ml-[2ch] font-serif text-[clamp(3.5rem,10vw,9rem)] italic leading-[0.9] tracking-tight text-brand-amber"
+          >
+            Now.
+          </motion.p>
 
-        <FadeIn delay={0.2}>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-            One AI-powered platform that replaces Slidebean, Unbounce, Hypefury,
-            Intercom, SimilarWeb & DALL-E. Everything you need to market your
-            startup, at a fraction of the cost.
-          </p>
-        </FadeIn>
+          {/* Shimmer amber line */}
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0, width: 0 }}
+            animate={{ opacity: 1, scaleX: 1, width: "16rem" }}
+            transition={{ delay: 0.6, duration: 0.5, ease }}
+            className="shimmer-line mt-4 h-[2px] origin-left"
+          />
 
-        <FadeIn delay={0.3}>
-          <div className="mt-8 flex flex-col items-center gap-4">
-            <WaitlistForm source="hero" />
-            <div className="flex flex-col items-center gap-2 text-sm">
-              <a
-                href="#problem"
-                className="text-muted-foreground transition-colors hover:text-foreground"
-              >
-                See How It Works &darr;
-              </a>
-              <p className="font-mono text-xs text-brand-cyan">
-                Early Bird: 50% off for first 100 users
-              </p>
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ delay: 0.85, duration: 0.5, ease }}
+            className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base"
+          >
+            One AI platform. Six tools replaced.{" "}
+            Save{" "}
+            <CountUp
+              value={392}
+              prefix="$"
+              suffix="/mo"
+              duration={2.5}
+              className="text-glow-red font-mono font-bold text-red-500"
+            />
+          </motion.p>
+
+          {/* Form with CTA glow */}
+          <motion.div
+            initial={{ opacity: 0, y: 25, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 1.1, duration: 0.5, ease }}
+            className="mt-6 max-w-lg"
+          >
+            <div className="cta-glow-container p-3 sm:p-5">
+              <WaitlistForm />
             </div>
+          </motion.div>
+
+          {/* Live join ticker */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 0.4, ease }}
+            className="mt-4"
+          >
+            <LiveJoinTicker />
+          </motion.div>
+
+          {/* Avatar stack social proof */}
+          <div className="mt-3">
+            <AvatarStack />
           </div>
-        </FadeIn>
+        </div>
       </div>
+
+      {/* ---- Footer row ---- */}
+      <motion.footer
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.6, duration: 0.5, ease }}
+        className="relative z-10 flex shrink-0 items-end justify-between border-t border-white/[0.04] pb-5 pt-3 sm:pb-6"
+      >
+        <p className="font-display text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground/50 sm:text-[11px]">
+          Your competitors aren&apos;t waiting
+        </p>
+        <div className="text-right text-[10px] tracking-wide text-muted-foreground/50">
+          &copy; {new Date().getFullYear()} MarketingNow
+        </div>
+      </motion.footer>
     </section>
   );
 }

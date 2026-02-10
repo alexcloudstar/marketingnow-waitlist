@@ -37,6 +37,7 @@ export interface Feature {
   name: string;
   description: string;
   icon: LucideIcon;
+  featured: boolean;
 }
 
 export const features: Feature[] = [
@@ -44,94 +45,64 @@ export const features: Feature[] = [
     name: "Pitch Deck Generator",
     description: "AI creates investor-ready pitch decks in minutes, not weeks.",
     icon: Presentation,
+    featured: true,
   },
   {
     name: "Landing Page Optimizer",
     description:
       "Generate, A/B test, and optimize landing pages that convert.",
     icon: MousePointerClick,
+    featured: true,
   },
   {
     name: "Twitter Assistant Pro",
     description:
       "Schedule, write, and grow your Twitter presence with AI.",
     icon: Twitter,
+    featured: true,
   },
   {
     name: "Customer Support AI",
     description:
       "Instant AI responses to customer questions, 24/7.",
     icon: MessageCircle,
+    featured: false,
   },
   {
     name: "Competitor Analysis",
     description: "Track competitors, analyze strategies, find opportunities.",
     icon: BarChart3,
+    featured: true,
   },
   {
     name: "AI Video Generation",
     description:
       "Turn blog posts into engaging short-form video content.",
     icon: Image,
+    featured: true,
   },
   {
     name: "Thread Generator",
     description:
       "Transform any content into viral Twitter/LinkedIn threads.",
     icon: Repeat,
+    featured: false,
   },
   {
     name: "Build-in-Public Automation",
     description:
       "Auto-share milestones, metrics, and updates with your audience.",
     icon: Rocket,
+    featured: false,
   },
   {
     name: "Email Templates",
     description:
       "AI-crafted email sequences for onboarding, sales, and retention.",
     icon: Mail,
+    featured: false,
   },
 ];
 
-// --- Stats ---
-export interface Stat {
-  value: number;
-  suffix: string;
-  label: string;
-}
-
-export const stats: Stat[] = [
-  { value: 482, suffix: "+", label: "Founders on Waitlist" },
-  { value: 33, suffix: "M", label: "Target Businesses" },
-  { value: 140, suffix: "B", label: "Market Size ($)" },
-  { value: 97, suffix: "%", label: "Projected Margin" },
-];
-
-// --- How it works steps ---
-export interface Step {
-  number: number;
-  title: string;
-  description: string;
-}
-
-export const steps: Step[] = [
-  {
-    number: 1,
-    title: "Tell Us About Your Business",
-    description:
-      "Answer a few quick questions so our AI understands your industry, audience, and goals.",
-  },
-  {
-    number: 2,
-    title: "Choose Your Features",
-    description:
-      "Pick the tools you need from our suite of 15 AI-powered marketing features.",
-  },
-  {
-    number: 3,
-    title: "Start Creating",
-    description:
-      "Generate pitch decks, landing pages, social content, and more in minutes.",
-  },
-];
+export const featuredFeatures = features.filter((f) => f.featured);
+export const additionalFeatureCount = features.length - featuredFeatures.length;

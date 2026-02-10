@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Syne, DM_Sans, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
@@ -12,22 +19,29 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+});
+
 export const metadata: Metadata = {
-  title: "MarketingNow - Stop Paying for 6 Marketing Tools",
+  title: "MarketingNow — Your Entire Marketing Stack, One AI Platform",
   description:
-    "One AI-powered platform that replaces Slidebean, Unbounce, Hypefury, Intercom, SimilarWeb & DALL-E. Join the waitlist.",
+    "Replace 6 expensive marketing tools with one AI-powered platform. Save $392/mo on pitch decks, landing pages, social media, analytics & more. Join the waitlist.",
   openGraph: {
-    title: "MarketingNow - Stop Paying for 6 Marketing Tools",
+    title: "MarketingNow — Your Entire Marketing Stack, One AI Platform",
     description:
-      "One AI-powered platform that replaces 6 expensive marketing tools. Join the waitlist.",
+      "Replace 6 expensive marketing tools with one AI-powered platform. Save $392/mo. Join the waitlist.",
     type: "website",
     siteName: "MarketingNow",
   },
   twitter: {
     card: "summary_large_image",
-    title: "MarketingNow - Stop Paying for 6 Marketing Tools",
+    title: "MarketingNow — Your Entire Marketing Stack, One AI Platform",
     description:
-      "One AI-powered platform that replaces 6 expensive marketing tools. Join the waitlist.",
+      "Replace 6 expensive marketing tools with one AI-powered platform. Save $392/mo. Join the waitlist.",
   },
 };
 
@@ -39,7 +53,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${syne.variable} ${dmSans.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased h-dvh overflow-hidden`}
       >
         {children}
       </body>
