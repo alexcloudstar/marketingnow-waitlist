@@ -90,7 +90,7 @@ export function Hero() {
             transition={{ delay: 0.85, duration: 0.5, ease }}
             className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base"
           >
-            One AI platform. Six tools replaced. Save $392/mo.
+            One AI platform. Six tools replaced. Save <span className="font-bold text-red-500">$392/mo.</span>
             {/* <CountUp
               value={392}
               prefix="$"
