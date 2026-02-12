@@ -72,7 +72,7 @@ export const metadata: Metadata = {
       "Replace 6 expensive marketing tools with one AI-powered platform. Save $392/mo. Join the waitlist.",
     images: [
       {
-        url: `${baseUrl}/og-image.png`,
+        url: `${baseUrl}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "MarketingNow - All-in-One AI Marketing Platform",
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
     title: "MarketingNow - Your Entire Marketing Stack, One AI Platform",
     description:
       "Replace 6 expensive marketing tools with one AI-powered platform. Save $392/mo. Join the waitlist.",
-    images: [`${baseUrl}/og-image.png`],
+    images: [`${baseUrl}/og-image.jpg`],
     creator: "@marketingnow",
   },
   alternates: {
